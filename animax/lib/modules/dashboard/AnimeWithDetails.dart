@@ -19,6 +19,18 @@ class AnimeWithDetails extends StatelessWidget {
         ),
       ),
       Positioned(
+        left: 20,
+        top: 20,
+        child: Opacity(
+          opacity: 0.8,
+          child: Icon(
+            Icons.local_fire_department_sharp,
+            color: Colors.green.shade400,
+            size: 40,
+          ),
+        ),
+      ),
+      Positioned(
         width: 310,
         left: 20,
         bottom: 20,
