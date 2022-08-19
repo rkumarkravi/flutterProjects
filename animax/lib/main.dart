@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/login', page: () => const Login()),
         GetPage(name: '/dashboard', page: () => Dashboard()),
       ],
-      unknownRoute: GetPage(name: "/notFound", page: () => const Error()),
+      unknownRoute: GetPage(name: "/notFound", page: () => Dashboard()),
     );
   }
 }

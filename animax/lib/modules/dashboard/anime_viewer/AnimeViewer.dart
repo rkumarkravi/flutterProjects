@@ -32,6 +32,8 @@ class _AnimeViewerState extends State<AnimeViewer> {
               VideoPlayer(seasonController.controller),
               _ControlsOverlay(controller: seasonController.controller),
               VideoProgressIndicator(seasonController.controller,
+                  colors:
+                      VideoProgressColors(playedColor: Colors.green.shade600),
                   allowScrubbing: true),
             ],
           ),
@@ -53,10 +55,17 @@ class _AnimeViewerState extends State<AnimeViewer> {
                     : animeBackDrop()),
                 Positioned(
                     top: 20,
-                    left: 25,
-                    child: InkWell(
-                        onTap: () => Get.back(),
-                        child: const Icon(Icons.arrow_back_outlined)))
+                    left: 15,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.green.shade600,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: IconButton(
+                          color: Colors.white,
+                          tooltip: "Back",
+                          onPressed: () => {Get.back()},
+                          icon: const Icon(Icons.arrow_back_outlined)),
+                    ))
               ],
             ),
             Padding(
@@ -76,24 +85,34 @@ class _AnimeViewerState extends State<AnimeViewer> {
                   ),
                   Row(
                     children: [
-                      TextButton.icon(
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.green),
-                        ),
-                        label: const Text(
-                          "Play",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        icon: const Icon(
-                          Icons.play_circle,
-                          color: Colors.white,
-                        ),
-                        onPressed: () => {},
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
+                      widget.animeDetail.videos!.isNotEmpty
+                          ? TextButton.icon(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.green),
+                              ),
+                              label: const Text(
+                                "Play",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              icon: const Icon(
+                                Icons.play_circle,
+                                color: Colors.white,
+                              ),
+                              onPressed: () => {
+                                seasonController.playVideo.value = false,
+                                seasonController.playVideo.refresh(),
+                                seasonController.onTapVideo(
+                                    videos.first.videoBlobFile!.vbId!)
+                              },
+                            )
+                          : const SizedBox(),
+                      widget.animeDetail.videos!.isNotEmpty
+                          ? const SizedBox(
+                              width: 10,
+                            )
+                          : const SizedBox(),
                       OutlinedButton.icon(
                         style: TextButton.styleFrom(
                           primary: Colors.white,
@@ -166,8 +185,7 @@ class _AnimeViewerState extends State<AnimeViewer> {
 }
 
 class _ControlsOverlay extends StatelessWidget {
-  const _ControlsOverlay({Key? key, required this.controller})
-      : super(key: key);
+  _ControlsOverlay({Key? key, required this.controller}) : super(key: key);
 
   static const List<Duration> _exampleCaptionOffsets = <Duration>[
     Duration(seconds: -10),
@@ -192,70 +210,113 @@ class _ControlsOverlay extends StatelessWidget {
   ];
 
   final VideoPlayerController controller;
+  RxBool playing = false.obs;
+  RxDouble speedVal = RxDouble(1);
+  RxBool noMute = false.obs;
 
   @override
   Widget build(BuildContext context) {
     debugPrint('${controller.value.isPlaying}');
+    playing.value = controller.value.isPlaying;
+    debugPrint('${controller.value.duration.inMinutes}');
+    noMute.value = (controller.value.volume) > 0;
     return Stack(
       children: <Widget>[
         AnimatedSwitcher(
           duration: const Duration(milliseconds: 50),
           reverseDuration: const Duration(milliseconds: 200),
-          child: controller.value.isPlaying
-              ? const SizedBox.shrink()
-              : Container(
-                  color: Colors.black26,
-                  child: const Center(
-                    child: Icon(
-                      Icons.play_arrow,
-                      color: Colors.white,
-                      size: 100.0,
-                      semanticLabel: 'Play',
+          child: Obx(
+            () => playing.value
+                ? const SizedBox.shrink()
+                : Container(
+                    color: Colors.black26,
+                    child: const Center(
+                      child: Icon(
+                        Icons.play_arrow,
+                        color: Colors.white,
+                        size: 100.0,
+                        semanticLabel: 'Play',
+                      ),
                     ),
                   ),
-                ),
+          ),
         ),
         GestureDetector(
           onTap: () {
-            controller.value.isPlaying ? controller.pause() : controller.play();
+            if (!playing.value) {
+              playing.value = true;
+              controller.play();
+            } else {
+              playing.value = false;
+              controller.pause();
+            }
+            playing.refresh();
           },
         ),
-        Align(
-          alignment: Alignment.topLeft,
-          child: PopupMenuButton<Duration>(
-            initialValue: controller.value.captionOffset,
-            tooltip: 'Caption Offset',
-            onSelected: (Duration delay) {
-              controller.setCaptionOffset(delay);
-            },
-            itemBuilder: (BuildContext context) {
-              return <PopupMenuItem<Duration>>[
-                for (final Duration offsetDuration in _exampleCaptionOffsets)
-                  PopupMenuItem<Duration>(
-                    value: offsetDuration,
-                    child: Text('${offsetDuration.inMilliseconds}ms'),
-                  )
-              ];
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                // Using less vertical padding as the text is also longer
-                // horizontally, so it feels like it would need more spacing
-                // horizontally (matching the aspect ratio of the video).
-                vertical: 12,
-                horizontal: 16,
+        Positioned(
+            bottom: 10,
+            left: 5,
+            child: InkWell(
+              child: Obx(
+                () => Tooltip(
+                  message: noMute.value ? "Mute" : "UnMute",
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 1),
+                    child: Obx(() => noMute.value
+                        ? const Icon(Icons.volume_up)
+                        : const Icon(Icons.volume_off)),
+                  ),
+                ),
               ),
-              child: Text('${controller.value.captionOffset.inMilliseconds}ms'),
-            ),
-          ),
-        ),
+              onTap: () {
+                if (noMute.value) {
+                  noMute.value = false;
+                  controller.setVolume(0);
+                } else {
+                  noMute.value = true;
+                  controller.setVolume(1.0);
+                }
+                noMute.refresh();
+              },
+            )),
+        // Align(
+        //   alignment: Alignment.bottomLeft,
+        //   child: PopupMenuButton<Duration>(
+        //     initialValue: controller.value.captionOffset,
+        //     tooltip: 'Caption Offset',
+        //     onSelected: (Duration delay) {
+        //       controller.setCaptionOffset(delay);
+        //     },
+        //     itemBuilder: (BuildContext context) {
+        //       return <PopupMenuItem<Duration>>[
+        //         for (final Duration offsetDuration in _exampleCaptionOffsets)
+        //           PopupMenuItem<Duration>(
+        //             value: offsetDuration,
+        //             child: Text('${offsetDuration.inMilliseconds}ms'),
+        //           )
+        //       ];
+        //     },
+        //     child: Padding(
+        //       padding: const EdgeInsets.symmetric(
+        //         // Using less vertical padding as the text is also longer
+        //         // horizontally, so it feels like it would need more spacing
+        //         // horizontally (matching the aspect ratio of the video).
+        //         vertical: 12,
+        //         horizontal: 16,
+        //       ),
+        //       child: Text('${controller.value.captionOffset.inMilliseconds}ms'),
+        //     ),
+        //   ),
+        // ),
         Align(
-          alignment: Alignment.topRight,
+          alignment: Alignment.bottomRight,
           child: PopupMenuButton<double>(
             initialValue: controller.value.playbackSpeed,
             tooltip: 'Playback speed',
             onSelected: (double speed) {
               controller.setPlaybackSpeed(speed);
+              speedVal.value = speed;
+              speedVal.refresh();
             },
             itemBuilder: (BuildContext context) {
               return <PopupMenuItem<double>>[
@@ -266,15 +327,14 @@ class _ControlsOverlay extends StatelessWidget {
                   )
               ];
             },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                // Using less vertical padding as the text is also longer
-                // horizontally, so it feels like it would need more spacing
-                // horizontally (matching the aspect ratio of the video).
-                vertical: 12,
-                horizontal: 16,
+            child: Obx(
+              () => Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 16,
+                ),
+                child: Text('${speedVal.value}x'),
               ),
-              child: Text('${controller.value.playbackSpeed}x'),
             ),
           ),
         ),

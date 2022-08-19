@@ -30,31 +30,37 @@ class Dashboard extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: FutureBuilder(
-            future: dashboardController?.fetchData(),
+            future: dashboardController.fetchData(),
             builder:
                 (BuildContext context, AsyncSnapshot<AnimeRespone> snapshot) {
-              AnimeRespone jsonvalue = snapshot.data!;
-              return jsonvalue.content != null
-                  ? Column(
-                      children: [
-                        AnimeWithDetails(jsonvalue.content![0],
-                            key: const ValueKey(1)),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        AnimeRow(
-                          "Top Hits Anime",
-                          jsonvalue.content!,
-                          key: const ValueKey(2),
-                        ),
-                        AnimeRow(
-                          "New Episode Release",
-                          jsonvalue.content!,
-                          key: const ValueKey(3),
-                        ),
-                      ],
-                    )
-                  : Text("Loading...");
+              if (snapshot.hasData) {
+                AnimeRespone jsonvalue = snapshot.data!;
+                return Column(
+                  children: [
+                    AnimeWithDetails(jsonvalue.content![0],
+                        key: const ValueKey(1)),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    AnimeRow(
+                      "Top Hits Anime",
+                      jsonvalue.content!,
+                      key: const ValueKey(2),
+                    ),
+                    AnimeRow(
+                      "New Episode Release",
+                      jsonvalue.content!,
+                      key: const ValueKey(3),
+                    ),
+                  ],
+                );
+              } else {
+                return Center(
+                  child:
+                      CircularProgressIndicator(color: Colors.green.shade600),
+                );
+              }
+              ;
             }),
       ),
     );

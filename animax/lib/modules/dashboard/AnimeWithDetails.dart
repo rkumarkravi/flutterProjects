@@ -10,10 +10,12 @@ class AnimeWithDetails extends StatelessWidget {
     return Stack(children: [
       Opacity(
         opacity: 0.5,
-        child: Image.network(
-          animeDetail.animeBackdrop ?? "",
-          height: 300,
-          fit: BoxFit.fitHeight,
+        child: AspectRatio(
+          aspectRatio: 16 / 9,
+          child: Image.network(
+            animeDetail.animeBackdrop ?? "",
+            fit: BoxFit.fitHeight,
+          ),
         ),
       ),
       Positioned(

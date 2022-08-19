@@ -11,47 +11,60 @@ class SeasonViewer extends StatelessWidget {
     this.isSeason = isSeason!;
   }
 
-  SeasonController seasonController =
-      Get.put(SeasonController(), permanent: true);
+  SeasonController seasonController = Get.put(SeasonController());
 
   @override
   Widget build(BuildContext context) {
+    seasonController.filteredVideos.value = videos;
+    List<String> seasons = [];
+    for (var element in videos) {
+      seasons.add('Season ${element.seasonNo}');
+    }
+    seasons = seasons.toSet().toList().reversed.toList();
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text("Episodes"),
-            isSeason
-                ? Obx(() => DropdownButton<String>(
-                      hint: seasonController.dropdownVal.value == ""
-                          ? const Text("Season 1")
-                          : Text(seasonController.dropdownVal.value),
-                      items:
-                          <String>['Season 1', 'Season 2'].map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (val) {
-                        print(seasonController.dropdownVal.value);
-                        seasonController.dropdownVal.value = '$val';
-                      },
-                    ))
-                : SizedBox()
-          ],
-        ),
-        if (videos.isNotEmpty)
+        isSeason
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text("Episodes"),
+                  Obx(() => DropdownButton<String>(
+                        hint: seasonController.dropdownVal.value == ""
+                            ? const Text("Season 1")
+                            : Text(seasonController.dropdownVal.value),
+                        items: seasons.map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (val) {
+                          seasonController.dropdownVal.value = '$val';
+                          seasonController.dropdownVal.refresh();
+                          debugPrint(seasonController.dropdownVal.value);
+                        },
+                      ))
+                ],
+              )
+            : const SizedBox(),
+        if (seasonController.filteredVideos.isNotEmpty)
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: videos
-                    .map<EpisodeNode>((episode) => EpisodeNode(
-                        episode, videos.indexOf(episode),
-                        key: ObjectKey(episode)))
-                    .toList()),
+            child: Obx(
+              () {
+                var a = 0;
+                return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: seasonController.filteredVideos
+                        .where((element) => 'Season ${element.seasonNo}'
+                            .contains(seasonController.dropdownVal))
+                        .toList()
+                        .map<EpisodeNode>((episode) =>
+                            EpisodeNode(episode, a++, key: ObjectKey(episode)))
+                        .toList());
+              },
+            ),
           ),
       ],
     );

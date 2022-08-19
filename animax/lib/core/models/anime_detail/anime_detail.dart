@@ -160,13 +160,15 @@ class Video {
   VideoBlobFile? videoBlobFile;
   Thumbnail? thumbnail;
   int? vid;
+  int? seasonNo;
 
   Video(
       {this.totalTime,
       this.title,
       this.videoBlobFile,
       this.thumbnail,
-      this.vid});
+      this.vid,
+      this.seasonNo});
 
   Video.fromJson(Map<String, dynamic> json) {
     totalTime = json['totalTime'];
@@ -178,6 +180,7 @@ class Video {
         ? Thumbnail.fromJson(json['thumbnail'])
         : null)!;
     vid = json['vid'];
+    seasonNo = json['seasonNo'];
   }
 
   Map<String, dynamic> toJson() {
@@ -191,6 +194,7 @@ class Video {
       data['thumbnail'] = thumbnail?.toJson();
     }
     data['vid'] = vid;
+    data['seasonNo'] = seasonNo;
     return data;
   }
 }
