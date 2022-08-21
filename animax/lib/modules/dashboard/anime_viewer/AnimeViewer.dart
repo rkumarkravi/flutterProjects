@@ -31,10 +31,11 @@ class _AnimeViewerState extends State<AnimeViewer> {
             children: <Widget>[
               VideoPlayer(seasonController.controller),
               _ControlsOverlay(controller: seasonController.controller),
-              VideoProgressIndicator(seasonController.controller,
-                  colors:
-                      VideoProgressColors(playedColor: Colors.green.shade600),
-                  allowScrubbing: true),
+              VideoProgressIndicator(
+                seasonController.controller,
+                colors: VideoProgressColors(playedColor: Colors.green.shade600),
+                allowScrubbing: true,
+              ),
             ],
           ),
         );

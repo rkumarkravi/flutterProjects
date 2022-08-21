@@ -1,8 +1,7 @@
 import 'package:animax/core/models/anime_detail/anime_detail.dart';
+import 'package:animax/modules/dashboard/anime_viewer/AnimeViewer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'anime_viewer/AnimeViewer.dart';
 
 class AnimeCard extends StatelessWidget {
   final AnimeDetail animeDetail;

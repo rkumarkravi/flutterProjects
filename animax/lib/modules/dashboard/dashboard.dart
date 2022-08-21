@@ -1,13 +1,13 @@
 import 'package:animax/core/models/anime_detail/anime_detail.dart';
-import 'package:animax/modules/dashboard/AnimeRow.dart';
-import 'package:animax/modules/dashboard/AnimeWithDetails.dart';
 import 'package:animax/modules/dashboard/dashboarController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'anime_viewer/dashboard_node_view/AnimeRow.dart';
+import 'anime_viewer/dashboard_node_view/AnimeWithDetails.dart';
+
 class Dashboard extends StatelessWidget {
-  DashboarController dashboardController =
-      Get.put(DashboarController(), permanent: true);
+  DashboarController dashboardController = Get.put(DashboarController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +30,7 @@ class Dashboard extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: FutureBuilder(
-            future: dashboardController.fetchData(),
+            future: dashboardController.fetchData(0, 5),
             builder:
                 (BuildContext context, AsyncSnapshot<AnimeRespone> snapshot) {
               if (snapshot.hasData) {
@@ -56,11 +56,15 @@ class Dashboard extends StatelessWidget {
                 );
               } else {
                 return Center(
-                  child:
-                      CircularProgressIndicator(color: Colors.green.shade600),
+                  heightFactor: 7,
+                  child: SizedBox(
+                    height: 100,
+                    width: 100,
+                    child: CircularProgressIndicator(
+                        strokeWidth: 10, color: Colors.green.shade600),
+                  ),
                 );
               }
-              ;
             }),
       ),
     );

@@ -1,12 +1,14 @@
 import 'dart:convert';
 
 import 'package:animax/core/models/anime_detail/anime_detail.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:json_annotation/json_annotation.dart';
 
 class DashboarController extends GetxController {
   var nameOfApp = Rx<String>("abcjkskdjfsd");
+  var jwt = Rx<String>("");
   /* var jsonvalue = Rx<Map<String, dynamic>>(jsonDecode("""{
     "content": [
         {
@@ -168,7 +170,7 @@ class DashboarController extends GetxController {
     "empty": false
 }"""));*/
 
-  Future<AnimeRespone> fetchData() async {
+  Future<AnimeRespone> fetchData(page, size) async {
     //http://localhost:8080/anime/api/v1/anime/getAll
     final response = await http.post(
         Uri(
@@ -176,10 +178,13 @@ class DashboarController extends GetxController {
             host: 'localhost',
             port: 8080,
             path: 'anime/api/v1/anime/getAll'),
-        headers: {'Content-type': 'application/json'},
-        body: '{"page": 0,"size": 5}');
+        headers: {
+          'Content-type': 'application/json',
+          "Authorization": "Bearer ${jwt.value}"
+        },
+        body: '{"page": $page,"size": $size}');
     if (response.statusCode == 200) {
-      print(response.body);
+      debugPrint(response.body);
       return AnimeRespone.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Unexpected error occured!');

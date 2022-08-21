@@ -1,5 +1,6 @@
-import 'package:animax/core/auth/error.dart';
+import 'package:animax/core/auth/auth.dart';
 import 'package:animax/core/auth/login/login.dart';
+import 'package:animax/core/auth/signup/signup.dart';
 import 'package:animax/core/walk_through/splash-screen.dart';
 import 'package:animax/modules/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+          canvasColor: Color.fromARGB(255, 27, 27, 27),
           brightness: Brightness.dark,
           primarySwatch: Colors.green,
           primaryColor: Colors.green,
@@ -33,7 +35,9 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(name: "/splash", page: () => const SplashScreen()),
         GetPage(name: '/walk', page: () => const WalkThrough()),
-        GetPage(name: '/login', page: () => const Login()),
+        GetPage(name: '/auth', page: () => const Auth()),
+        GetPage(name: '/login', page: () => Login()),
+        GetPage(name: '/signup', page: () => Signup()),
         GetPage(name: '/dashboard', page: () => Dashboard()),
       ],
       unknownRoute: GetPage(name: "/notFound", page: () => Dashboard()),

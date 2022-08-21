@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class WalkThrough extends StatelessWidget {
   const WalkThrough({Key? key}) : super(key: key);
@@ -48,7 +49,7 @@ class WalkThrough extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     textStyle: const TextStyle(fontSize: 20)),
                 onPressed: () {
-                  Navigator.of(context).pushReplacementNamed('/login');
+                  Get.toNamed("/auth");
                 },
                 child: const Text('Get Started',
                     style:

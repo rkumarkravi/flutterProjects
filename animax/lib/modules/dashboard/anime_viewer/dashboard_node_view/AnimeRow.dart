@@ -1,7 +1,8 @@
-import 'package:animax/modules/dashboard/AnimeCard.dart';
+import 'package:animax/modules/dashboard/anime_viewer/dashboard_node_view/AnimeCard.dart';
 import 'package:flutter/material.dart';
-
-import '../../core/models/anime_detail/anime_detail.dart';
+import 'package:get/get.dart';
+import '../../../../core/models/anime_detail/anime_detail.dart';
+import '../Anime_see_all/AnimeSeeAll.dart';
 
 class AnimeRow extends StatelessWidget {
   final String animeRowName;
@@ -24,9 +25,14 @@ class AnimeRow extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const Text(
-                "See All",
-                style: TextStyle(color: Color.fromARGB(255, 109, 255, 114)),
+              InkWell(
+                onTap: () {
+                  Get.to(AnimeSeeAll(heading: animeRowName));
+                },
+                child: const Text(
+                  "See All",
+                  style: TextStyle(color: Color.fromARGB(255, 109, 255, 114)),
+                ),
               )
             ],
           ),

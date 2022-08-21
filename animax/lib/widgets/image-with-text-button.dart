@@ -1,26 +1,33 @@
 import 'package:flutter/material.dart';
 
 class ImageWithTextButton extends StatelessWidget {
-  Icon? _icon;
+  Icon? icon;
   final Text text;
-  Color? _color;
-  ImageWithTextButton({Key? key, Icon? icon, required this.text, Color? color})
-      : super(key: key) {
-    _color = color;
-    _icon = icon;
-  }
+  Color? color;
+  double? padding;
+  double? margin;
+  ImageWithTextButton(
+      {Key? key,
+      this.icon,
+      required this.text,
+      this.color,
+      this.padding,
+      this.margin})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width - 50,
-      margin: const EdgeInsets.all(5),
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      color: _color ?? Theme.of(context).backgroundColor,
+      padding: EdgeInsets.all(padding ?? 0),
+      margin: EdgeInsets.all(margin ?? 10),
+      decoration: BoxDecoration(
+          color: color ?? Theme.of(context).backgroundColor,
+          borderRadius: BorderRadius.circular(10)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _icon ?? SizedBox(),
+          icon ?? const SizedBox(),
           const SizedBox(
             width: 10,
           ),
