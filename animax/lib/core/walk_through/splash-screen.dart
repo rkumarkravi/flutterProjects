@@ -1,13 +1,25 @@
+import 'package:animax/utils/services/AuthService.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../utils/services/SharedPrefService.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(milliseconds: 5000), () {
-      Get.offNamed('/walk');
+    Future.delayed(const Duration(milliseconds: 3000), () async {
+      String? token=await getToken();
+      if(token!=null) {
+        var response=await validateToken(token);
+        debugPrint('${response['uid']}');
+        if(response['uid']!=null){
+          Get.offAllNamed("/dashboard");
+;        }
+      }else{
+        Get.offNamed('/walk');
+      }
     });
     return Scaffold(
       body: Container(

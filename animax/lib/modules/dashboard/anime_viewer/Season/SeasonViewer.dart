@@ -10,9 +10,7 @@ class SeasonViewer extends StatelessWidget {
   SeasonViewer(this.videos, {Key? key, bool? isSeason}) : super(key: key) {
     this.isSeason = isSeason!;
   }
-
   SeasonController seasonController = Get.put(SeasonController());
-
   @override
   Widget build(BuildContext context) {
     seasonController.filteredVideos.value = videos;

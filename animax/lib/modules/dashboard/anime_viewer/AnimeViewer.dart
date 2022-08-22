@@ -16,11 +16,11 @@ class AnimeViewer extends StatefulWidget {
 }
 
 class _AnimeViewerState extends State<AnimeViewer> {
+  SeasonController seasonController = Get.put(SeasonController());
+
   @override
   Widget build(BuildContext context) {
     List<Video> videos = List<Video>.from(widget.animeDetail.videos!);
-    SeasonController seasonController = Get.put(SeasonController());
-
     Widget _playView(BuildContext context) {
       final controller = seasonController.controller;
       if (controller.value.isInitialized) {
@@ -174,6 +174,12 @@ class _AnimeViewerState extends State<AnimeViewer> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    seasonController.controller.dispose();
+    super.dispose();
   }
 
   Image animeBackDrop() {

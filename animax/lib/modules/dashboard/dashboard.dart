@@ -1,13 +1,10 @@
 import 'package:animax/core/models/anime_detail/anime_detail.dart';
-import 'package:animax/modules/dashboard/dashboarController.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
+import '../../utils/services/AnimeService.dart';
 import 'anime_viewer/dashboard_node_view/AnimeRow.dart';
 import 'anime_viewer/dashboard_node_view/AnimeWithDetails.dart';
 
 class Dashboard extends StatelessWidget {
-  DashboarController dashboardController = Get.put(DashboarController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +27,7 @@ class Dashboard extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: FutureBuilder(
-            future: dashboardController.fetchData(0, 5),
+            future: fetchData(0, 5),
             builder:
                 (BuildContext context, AsyncSnapshot<AnimeRespone> snapshot) {
               if (snapshot.hasData) {

@@ -1,19 +1,17 @@
 import 'package:animax/core/models/anime_detail/anime_detail.dart';
-import 'package:animax/modules/dashboard/anime_viewer/Anime_see_all/SeeAllNode.dart';
-import 'package:animax/modules/dashboard/dashboarController.dart';
+import 'package:animax/modules/dashboard/Anime_see_all/SeeAllNode.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import '../../../utils/services/AnimeService.dart';
 
 class AnimeSeeAll extends StatelessWidget {
   String heading = "";
-  AnimeSeeAll({Key? key, required String heading}) : super(key: key) {
-    this.heading = heading;
-  }
-
+  AnimeSeeAll({Key? key, required this.heading}) : super(key: key) ;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
         title: Text(
           heading,
           style: const TextStyle(fontSize: 20),
@@ -21,7 +19,7 @@ class AnimeSeeAll extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: FutureBuilder(
-            future: Get.find<DashboarController>().fetchData(0, 10),
+            future:fetchData(0, 10),
             builder:
                 (BuildContext context, AsyncSnapshot<AnimeRespone> snapshot) {
               int a = 0;

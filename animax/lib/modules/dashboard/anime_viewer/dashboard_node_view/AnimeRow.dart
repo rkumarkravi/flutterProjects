@@ -2,7 +2,7 @@ import 'package:animax/modules/dashboard/anime_viewer/dashboard_node_view/AnimeC
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/models/anime_detail/anime_detail.dart';
-import '../Anime_see_all/AnimeSeeAll.dart';
+import '../../Anime_see_all/AnimeSeeAll.dart';
 
 class AnimeRow extends StatelessWidget {
   final String animeRowName;
@@ -27,7 +27,7 @@ class AnimeRow extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  Get.to(AnimeSeeAll(heading: animeRowName));
+                  Get.to(()=>AnimeSeeAll(heading: animeRowName));
                 },
                 child: const Text(
                   "See All",

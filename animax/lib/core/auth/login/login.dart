@@ -1,21 +1,18 @@
-import 'package:animax/core/auth/AuthController.dart';
 import 'package:animax/core/custom/AnimeTextField.dart';
 import 'package:animax/core/custom/DividerWithText.dart';
-import 'package:animax/modules/dashboard/dashboarController.dart';
 import 'package:animax/widgets/image-with-text-button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../utils/services/AuthService.dart';
 
 class Login extends StatelessWidget {
   final emailController = TextEditingController();
   final passController = TextEditingController();
   Login({Key? key}) : super(key: key);
 
-  AuthController authController = Get.put(AuthController());
-
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => DashboarController());
     return Scaffold(
       body: Column(
         children: [
@@ -72,15 +69,20 @@ class Login extends StatelessWidget {
               onTap: () async {
                 //Get.offAllNamed("/dashboard");
                 debugPrint(emailController.text + "," + passController.text);
-                var res = await authController.attemptLogIn(
+                var res = await attemptLogIn(
                     emailController.text, passController.text);
-
-                var msg = "Login Sucessfull";
-                var type = "Info";
+                var msg,type;
+                if(res['jwt']!=null) {
+                   msg = "Login Sucessfull";
+                  type = "Info";
+                  Get.offAllNamed("/dashboard");
+                }else{
+                  msg = "Something Went Wrong!!";
+                  type = "Error";
+                }
                 Get.snackbar(type, msg,
                     snackPosition: SnackPosition.BOTTOM,
                     margin: const EdgeInsets.all(8.0));
-                Get.offAllNamed("/dashboard");
               },
               child: ImageWithTextButton(
                   color: Colors.green.shade600,

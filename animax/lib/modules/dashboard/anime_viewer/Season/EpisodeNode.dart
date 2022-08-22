@@ -2,6 +2,7 @@ import 'package:animax/modules/dashboard/anime_viewer/Season/SeasonController.da
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../constants/UrlConsts.dart';
 import '../../../../core/models/anime_detail/anime_detail.dart';
 
 class EpisodeNode extends StatelessWidget {
@@ -25,7 +26,7 @@ class EpisodeNode extends StatelessWidget {
           child: Stack(
             children: [
               Image.network(
-                'http://localhost:8080/anime/api/v1/downloadThumbnail/' +
+               IMAGE_URL +
                     '${video.thumbnail?.tid}',
                 height: 100,
                 width: 150,

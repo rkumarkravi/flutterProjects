@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-          canvasColor: Color.fromARGB(255, 27, 27, 27),
+          canvasColor: const Color.fromARGB(255, 27, 27, 27),
           brightness: Brightness.dark,
           primarySwatch: Colors.green,
           primaryColor: Colors.green,
