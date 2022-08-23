@@ -29,40 +29,22 @@ class _DashboardState extends State<Dashboard> {
         selectedItemColor: const Color.fromARGB(255, 109, 255, 114),
         type: BottomNavigationBarType.fixed,
         currentIndex: currentIndex,
-        items: [
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
-              icon: InkWell(
-                  onTap: () {
-                    setState(() {
-                      currentIndex = 0;
-                    });
-                  },
-                  child: const Icon(Icons.home)),
-              label: "Home"),
-          const BottomNavigationBarItem(
               icon: Icon(Icons.calendar_month_rounded), label: "Release Cal."),
           BottomNavigationBarItem(
-              icon: InkWell(
-                  onTap: () {
-                    setState(() {
-                      currentIndex = 2;
-                    });
-                  },
-                  child: const Icon(Icons.bookmark_border_outlined)),
-              label: "My List"),
-          const BottomNavigationBarItem(
+              icon: Icon(Icons.bookmark_border_outlined), label: "My List"),
+          BottomNavigationBarItem(
               icon: Icon(Icons.download_for_offline_outlined),
               label: "Download"),
           BottomNavigationBarItem(
-              icon: InkWell(
-                  onTap: () {
-                    setState(() {
-                      currentIndex = 4;
-                    });
-                  },
-                  child: const Icon(Icons.settings)),
-              label: "Settings"),
+              icon: Icon(Icons.settings), label: "Settings"),
         ],
+        onTap: (index) {
+          currentIndex = index;
+          setState(() {});
+        },
       ),
       body: SingleChildScrollView(child: pages[currentIndex]),
     );
