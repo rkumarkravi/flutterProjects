@@ -16,9 +16,9 @@ class AnimeCard extends StatelessWidget {
           Stack(
             children: [
               Image.network(
-                animeDetail.animeBackdrop ?? "",
+                animeDetail.poster ?? "",
                 height: 200,
-                width: 150,
+                width: 144,
                 fit: BoxFit.cover,
               ),
               Positioned(

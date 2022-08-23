@@ -1,4 +1,5 @@
 import 'package:animax/modules/dashboard/anime_viewer/Season/SeasonController.dart';
+import 'package:animax/utils/services/AnimeService.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
@@ -55,12 +56,12 @@ class _AnimeViewerState extends State<AnimeViewer> {
                     ? _playView(context)
                     : animeBackDrop()),
                 Positioned(
-                    top: 20,
+                    top: 25,
                     left: 15,
                     child: Container(
                       decoration: BoxDecoration(
                           color: Colors.green.shade600,
-                          borderRadius: BorderRadius.circular(20)),
+                          borderRadius: BorderRadius.circular(40)),
                       child: IconButton(
                           color: Colors.white,
                           tooltip: "Back",
@@ -127,7 +128,9 @@ class _AnimeViewerState extends State<AnimeViewer> {
                           Icons.add,
                           color: Colors.white,
                         ),
-                        onPressed: () => {},
+                        onPressed: () {
+                          addToMyList(widget.animeDetail.aid);
+                        },
                       ),
                       const SizedBox(
                         width: 10,

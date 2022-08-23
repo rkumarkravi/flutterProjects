@@ -1,8 +1,9 @@
-import 'package:animax/modules/dashboard/anime_viewer/dashboard_node_view/AnimeCard.dart';
+
+import 'package:animax/modules/dashboard/dashboard_widgets/AnimeCard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/models/anime_detail/anime_detail.dart';
-import '../../Anime_see_all/AnimeSeeAll.dart';
+import '../Anime_see_all/AnimeSeeAll.dart';
 
 class AnimeRow extends StatelessWidget {
   final String animeRowName;

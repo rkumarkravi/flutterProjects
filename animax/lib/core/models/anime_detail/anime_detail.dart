@@ -1,4 +1,35 @@
-class AnimeRespone {
+class ApiResponse {
+  String? status;
+  String? message;
+  String? path;
+  String? timeStamp;
+  AnimeRespone? data;
+
+  ApiResponse(
+      {this.status, this.message, this.path, this.timeStamp, this.data});
+
+  ApiResponse.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    message = json['message'];
+    path = json['path'];
+    timeStamp = json['timeStamp'];
+    data = json['data'] != null ? AnimeRespone.fromJson(json['data']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
+    data['path'] = path;
+    data['timeStamp'] = timeStamp;
+    if (this.data != null) {
+      data['data'] = this.data?.toJson();
+    }
+    return data;
+  }
+}
+
+class AnimeRespone<T> {
   List<AnimeDetail>? content;
   String? pageable;
   int? totalPages;

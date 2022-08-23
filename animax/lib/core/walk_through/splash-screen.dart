@@ -13,10 +13,12 @@ class SplashScreen extends StatelessWidget {
       String? token=await getToken();
       if(token!=null) {
         var response=await validateToken(token);
-        debugPrint('${response['uid']}');
-        if(response['uid']!=null){
+        debugPrint('$response');
+        if(response.statusCode == 200){
           Get.offAllNamed("/dashboard");
-;        }
+        }else{
+          Get.offAllNamed('/login');
+        }
       }else{
         Get.offNamed('/walk');
       }
