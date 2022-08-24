@@ -42,9 +42,9 @@ class SeeAllNode extends StatelessWidget {
                       width: 150,
                       child: Text(
                         animeDetail.name ?? "",
-                        style: const TextStyle(fontSize: 22),
+                        style: const TextStyle(fontSize: 20),
                         overflow: TextOverflow.ellipsis,
-                        softWrap: true,
+                        softWrap: false,
                         maxLines: 2,
                       ),
                     ),
@@ -55,7 +55,7 @@ class SeeAllNode extends StatelessWidget {
                     ),
                     const SizedBox(height: 70),
                     SizedBox(
-                      width: 200,
+                      width: 205,
                       height: 60,
                       child: Text(
                         '${animeDetail.description}',

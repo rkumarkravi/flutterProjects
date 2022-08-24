@@ -1,5 +1,6 @@
 import 'package:animax/modules/dashboard/dashboard.dart';
 import 'package:animax/modules/dashboard/dashboard_widgets/AnimeCard.dart';
+import 'package:animax/modules/dashboard/release_calender/ReleaseCalender.dart';
 import 'package:animax/utils/services/AnimeService.dart';
 import 'package:flutter/material.dart';
 
@@ -26,11 +27,11 @@ class _MyListPageState extends State<MyListPage> {
               children: const [
                 Text(
                   "My List",
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
                 ),
                 Icon(
                   Icons.search,
-                  size: 25,
+                  size: 20,
                 )
               ],
             ),
@@ -45,15 +46,12 @@ class _MyListPageState extends State<MyListPage> {
                     ApiResponse jsonvalue = snapshot.data!;
                     content = jsonvalue.data!.content!;
                     if (content.isEmpty) {
-                      return const Center(
-                          heightFactor: 1.39,
-                          child: Opacity(
-                            opacity: 0.5,
-                            child: Image(
-                                colorBlendMode: BlendMode.color,
-                                image:
-                                    AssetImage("assets/images/list_zero.png")),
-                          ));
+                      return CenterImageWithTextForNoData(
+                        text: "Your List is Empty",
+                        imageSrc: "assets/images/list_zero.png",
+                        desc:
+                            "It seems that you haven't added any anime to your list",
+                      );
                     }
                     return GridView.count(
                         shrinkWrap: true,
@@ -90,9 +88,8 @@ class _MyListPageState extends State<MyListPage> {
                                             onPressed: () {
                                               removeFromMyList(
                                                   content[index].aid);
-                                              setState(() {
-                                                content.remove(content[index]);
-                                              });
+                                              content.remove(content[index]);
+                                              setState(() {});
                                             },
                                           ),
                                         ],

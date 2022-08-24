@@ -5,6 +5,7 @@ import '../../constants/UrlConsts.dart';
 import '../../core/models/anime_detail/anime_detail.dart';
 import 'dart:convert';
 import 'SharedPrefService.dart';
+import 'package:intl/intl.dart';
 
 Future<AnimeRespone> fetchData(page, size) async {
   debugPrint("fetchData called!! ${await getToken()}");
@@ -21,6 +22,7 @@ Future<AnimeRespone> fetchData(page, size) async {
     debugPrint(response.body);
     return AnimeRespone.fromJson(jsonDecode(response.body));
   } else {
+    checkSessionExpired(response);
     throw Exception('Unexpected error occurred!');
   }
 }
@@ -45,6 +47,7 @@ Future<AnimeDetail> fetchDataInitialLoad(animeId) async {
     debugPrint(response.body);
     return AnimeDetail.fromJson(jsonDecode(response.body));
   } else {
+    checkSessionExpired(response);
     throw Exception('Unexpected error occured!');
   }
 }
@@ -63,8 +66,44 @@ Future<ApiResponse> fetchMyList(page, size) async {
     debugPrint(response.body);
     return ApiResponse.fromJson(jsonDecode(response.body));
   } else {
+    checkSessionExpired(response);
     throw Exception('Unexpected error occurred!');
   }
+}
+
+Future<List<AnimeDetail>> getByDate(date) async {
+  debugPrint("getByDate called!! $date");
+  final response = await http.get(
+      Uri(
+          scheme: 'http',
+          host: SERVER_IP,
+          port: 8080,
+          path: 'anime/api/v1/anime/getByDate',
+          queryParameters: {"date": date}),
+      headers: await getHeader);
+  if (response.statusCode == 200) {
+    debugPrint(response.body);
+    List<dynamic> body = jsonDecode(response.body);
+    return body.map((e) => AnimeDetail.fromJson(e)).toList();
+  } else {
+    checkSessionExpired(response);
+    throw Exception('Unexpected error occurred!');
+  }
+}
+
+List getDates(size) {
+  DateTime d = DateTime.now();
+  List list = [];
+  for (int i = 0; i < size; i++) {
+    var map = {};
+    map['day'] = DateFormat('EEE').format(d);
+    map['date'] = d.day;
+    map['dateForSearch'] = DateFormat('MM/dd/yyyy').format(d);
+    list.add(map);
+    d = d.add(const Duration(days: 1));
+  }
+  debugPrint('$list');
+  return list;
 }
 
 Future removeFromMyList(aid) async {
@@ -80,6 +119,7 @@ Future removeFromMyList(aid) async {
     debugPrint(response.body);
     return jsonDecode(response.body);
   } else {
+    checkSessionExpired(response);
     throw Exception('Unexpected error occurred!');
   }
 }
@@ -96,7 +136,7 @@ addToMyList(aid) async {
   if (response.statusCode == 200) {
     showSnackbar("Info", "Added to your list");
   } else {
-    showSnackbar("Error", "Something Went Wrong!");
+    checkSessionExpired(response);
     throw Exception('Unexpected error occurred!');
   }
 }
@@ -106,4 +146,11 @@ showSnackbar(type, msg) {
       duration: const Duration(seconds: 2),
       snackPosition: SnackPosition.BOTTOM,
       margin: const EdgeInsets.all(8.0));
+}
+
+checkSessionExpired(response) {
+  if (response.statusCode == 403) {
+    showSnackbar("Info", "You session is expired Please Login Again!");
+    Get.offAllNamed('/login');
+  }
 }

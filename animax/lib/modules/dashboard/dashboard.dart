@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:animax/core/models/anime_detail/anime_detail.dart';
 import 'package:animax/modules/dashboard/dashboard_widgets/AnimeWithDetails.dart';
 import 'package:animax/modules/dashboard/mylist/MyListPage.dart';
+import 'package:animax/modules/dashboard/release_calender/ReleaseCalender.dart';
 import 'package:flutter/material.dart';
+import 'package:get/state_manager.dart';
 import '../../core/settings/setting.dart';
 import '../../utils/services/AnimeService.dart';
 import 'dashboard_widgets/AnimeRow.dart';
@@ -16,8 +20,9 @@ class _DashboardState extends State<Dashboard> {
 
   final pages = [
     const HomePage(),
-    const HomePage(),
+    const ReleaseCalender(),
     const MyListPage(),
+    const HomePage(),
     const HomePage(),
     const Setting()
   ];
@@ -35,6 +40,7 @@ class _DashboardState extends State<Dashboard> {
               icon: Icon(Icons.calendar_month_rounded), label: "Release Cal."),
           BottomNavigationBarItem(
               icon: Icon(Icons.bookmark_border_outlined), label: "My List"),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
           BottomNavigationBarItem(
               icon: Icon(Icons.download_for_offline_outlined),
               label: "Download"),
@@ -53,17 +59,31 @@ class _DashboardState extends State<Dashboard> {
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
+    var animateHeroAnime = RxInt(0);
     return FutureBuilder(
         future: fetchData(0, 5),
         builder: (BuildContext context, AsyncSnapshot<AnimeRespone> snapshot) {
           if (snapshot.hasData) {
             AnimeRespone jsonvalue = snapshot.data!;
+            int totalLength = snapshot.data!.content!.length;
+            Timer.periodic(const Duration(seconds: 20), (timer) {
+              debugPrint(timer.tick.toString());
+              if (totalLength - 1 == animateHeroAnime.value) {
+                animateHeroAnime.value = 0;
+              } else {
+                animateHeroAnime++;
+              }
+              animateHeroAnime.refresh();
+            });
             return Column(
               children: [
-                AnimeWithDetails(jsonvalue.content![0], key: const ValueKey(1)),
+                Obx(
+                  () => AnimeWithDetails(
+                      jsonvalue.content![animateHeroAnime.value],
+                      key: const ValueKey(1)),
+                ),
                 const SizedBox(
                   height: 10,
                 ),

@@ -1,3 +1,4 @@
+import 'package:animax/utils/services/AnimeService.dart';
 import 'package:animax/utils/services/AuthService.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,16 +11,18 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(const Duration(milliseconds: 3000), () async {
-      String? token=await getToken();
-      if(token!=null) {
-        var response=await validateToken(token);
+      String? token = await getToken();
+      if (token != null) {
+        var response = await validateToken(token);
         debugPrint('$response');
-        if(response.statusCode == 200){
+        if (response.statusCode == 200) {
           Get.offAllNamed("/dashboard");
-        }else{
-          Get.offAllNamed('/login');
+        } else if (response.statusCode == 403) {
+          checkSessionExpired(response);
+        } else {
+          showSnackbar("Error", "Something went wrong!");
         }
-      }else{
+      } else {
         Get.offNamed('/walk');
       }
     });
