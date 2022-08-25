@@ -4,10 +4,9 @@ import 'package:get/get.dart';
 
 import '../../../../core/models/anime_detail/anime_detail.dart';
 
-class SeeAllNode extends StatelessWidget {
+class SearchChildNode extends StatelessWidget {
   final AnimeDetail animeDetail;
-  final int i;
-  const SeeAllNode(this.animeDetail, this.i, {Key? key}) : super(key: key);
+  const SearchChildNode(this.animeDetail, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +37,7 @@ class SeeAllNode extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: 150,
+                    width: 120,
                     child: Text(
                       animeDetail.name ?? "",
                       style: const TextStyle(fontSize: 20),
@@ -54,8 +53,8 @@ class SeeAllNode extends StatelessWidget {
                   ),
                   const SizedBox(height: 70),
                   SizedBox(
-                    width: 205,
-                    height: 60,
+                    width: 230,
+                    height: 70,
                     child: Text(
                       '${animeDetail.description}',
                       style: const TextStyle(fontSize: 11),

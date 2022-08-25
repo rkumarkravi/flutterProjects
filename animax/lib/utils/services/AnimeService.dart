@@ -91,6 +91,30 @@ Future<List<AnimeDetail>> getByDate(date) async {
   }
 }
 
+Future<List<AnimeDetail>> searchAnime(searchText) async {
+  debugPrint("searchAnime called st: $searchText");
+  if (searchText == '') {
+    return Future.value([]);
+  }
+  final response = await http.get(
+      Uri(
+          scheme: 'http',
+          host: SERVER_IP,
+          port: 8080,
+          path: 'anime/api/v1/anime/search',
+          queryParameters: {"searchText": searchText}),
+      headers: await getHeader);
+  debugPrint('${response}');
+  if (response.statusCode == 200) {
+    debugPrint(response.body);
+    List<dynamic> body = jsonDecode(response.body);
+    return body.map((e) => AnimeDetail.fromJson(e)).toList();
+  } else {
+    checkSessionExpired(response);
+    throw Exception('Unexpected error occurred!');
+  }
+}
+
 List getDates(size) {
   DateTime d = DateTime.now();
   List list = [];

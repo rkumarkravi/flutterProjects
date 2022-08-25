@@ -1,5 +1,7 @@
 import 'package:animax/core/models/anime_detail/anime_detail.dart';
+import 'package:animax/modules/dashboard/anime_viewer/AnimeViewer.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AnimeWithDetails extends StatelessWidget {
   AnimeDetail animeDetail;
@@ -65,7 +67,7 @@ class AnimeWithDetails extends StatelessWidget {
                   Icons.play_circle,
                   color: Colors.white,
                 ),
-                onPressed: () => {},
+                onPressed: () => {Get.to(AnimeViewer(animeDetail))},
               ),
               const SizedBox(
                 width: 20,

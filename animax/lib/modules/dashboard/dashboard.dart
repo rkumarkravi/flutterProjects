@@ -4,6 +4,7 @@ import 'package:animax/core/models/anime_detail/anime_detail.dart';
 import 'package:animax/modules/dashboard/dashboard_widgets/AnimeWithDetails.dart';
 import 'package:animax/modules/dashboard/mylist/MyListPage.dart';
 import 'package:animax/modules/dashboard/release_calender/ReleaseCalender.dart';
+import 'package:animax/modules/dashboard/search_anime/search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import '../../core/settings/setting.dart';
@@ -22,8 +23,8 @@ class _DashboardState extends State<Dashboard> {
     const HomePage(),
     const ReleaseCalender(),
     const MyListPage(),
-    const HomePage(),
-    const HomePage(),
+    Search(),
+    // const HomePage(),
     const Setting()
   ];
 
@@ -41,9 +42,9 @@ class _DashboardState extends State<Dashboard> {
           BottomNavigationBarItem(
               icon: Icon(Icons.bookmark_border_outlined), label: "My List"),
           BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.download_for_offline_outlined),
-              label: "Download"),
+          // BottomNavigationBarItem(
+          //     icon: Icon(Icons.download_for_offline_outlined),
+          //     label: "Download"),
           BottomNavigationBarItem(
               icon: Icon(Icons.settings), label: "Settings"),
         ],
@@ -69,7 +70,7 @@ class HomePage extends StatelessWidget {
             AnimeRespone jsonvalue = snapshot.data!;
             int totalLength = snapshot.data!.content!.length;
             Timer.periodic(const Duration(seconds: 20), (timer) {
-              debugPrint(timer.tick.toString());
+              // debugPrint(timer.tick.toString());
               if (totalLength - 1 == animateHeroAnime.value) {
                 animateHeroAnime.value = 0;
               } else {

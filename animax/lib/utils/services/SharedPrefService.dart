@@ -1,17 +1,17 @@
 import 'package:animax/constants/UrlConsts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-saveToken(token) async {
+saveToken(keyName, token) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  await prefs.setString(JWT_NAME, token);
+  await prefs.setString(keyName, token);
 }
 
-Future<String?> getToken() async{
+Future<String?> getToken() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  return prefs.getString(JWT_NAME);
+  return prefs.getString(ACCESS_TOKEN_KEY);
 }
 
-removeToken() async{
+removeToken() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.remove(JWT_NAME);
+  prefs.remove(ACCESS_TOKEN_KEY);
 }

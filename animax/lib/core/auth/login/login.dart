@@ -73,12 +73,12 @@ class Login extends StatelessWidget {
                   debugPrint(emailController.text + "," + passController.text);
                   var res = await attemptLogIn(
                       emailController.text, passController.text);
-                  var msg,type;
-                  if(res['jwtToken']!=null) {
-                     msg = "Login Sucessfull";
+                  var msg, type;
+                  if (res['access_token'] != null) {
+                    msg = "Login Sucessfull";
                     type = "Info";
                     Get.offAllNamed("/dashboard");
-                  }else{
+                  } else {
                     msg = "Something Went Wrong!!";
                     type = "Error";
                   }
