@@ -27,32 +27,34 @@ class SplashScreen extends StatelessWidget {
       }
     });
     return Scaffold(
-      body: Container(
-        alignment: Alignment.topCenter,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.animation_rounded,
-              color: Theme.of(context).primaryColor,
-              size: 200,
-            ),
-            const SizedBox(
-              height: 90,
-            ),
-            Icon(
-              Icons.local_fire_department_sharp,
-              color: Theme.of(context).primaryColor,
-              size: 60,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              "Loading",
-              style: TextStyle(color: Theme.of(context).primaryColor),
-            )
-          ],
+      body: SingleChildScrollView(
+        child: Center(
+          heightFactor: 10,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.animation_rounded,
+                color: Theme.of(context).primaryColor,
+                size: 200,
+              ),
+              const SizedBox(
+                height: 90,
+              ),
+              Icon(
+                Icons.local_fire_department_sharp,
+                color: Theme.of(context).primaryColor,
+                size: 60,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Loading",
+                style: TextStyle(color: Theme.of(context).primaryColor),
+              )
+            ],
+          ),
         ),
       ),
     );
