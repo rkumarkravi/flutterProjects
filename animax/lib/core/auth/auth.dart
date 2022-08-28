@@ -16,6 +16,7 @@ class Auth extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            const SizedBox(height: 40,),
             const Image(
                 width: 250,
                 height: 250,

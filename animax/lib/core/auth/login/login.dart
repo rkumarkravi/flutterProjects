@@ -73,9 +73,9 @@ class Login extends StatelessWidget {
                   debugPrint(emailController.text + "," + passController.text);
                   var res = await attemptLogIn(
                       emailController.text, passController.text);
-                  var msg, type;
+                  String msg, type;
                   if (res['access_token'] != null) {
-                    msg = "Login Sucessfull";
+                    msg = "Login Successfully";
                     type = "Info";
                     Get.offAllNamed("/dashboard");
                   } else {

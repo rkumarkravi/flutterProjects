@@ -46,134 +46,136 @@ class _AnimeViewerState extends State<AnimeViewer> {
       }
     }
 
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Obx(() => seasonController.playVideo.value
-                    ? _playView(context)
-                    : animeBackDrop()),
-                Positioned(
-                    top: 25,
-                    left: 15,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.green.shade600,
-                          borderRadius: BorderRadius.circular(40)),
-                      child: IconButton(
-                          color: Colors.white,
-                          tooltip: "Back",
-                          onPressed: () => {Get.back()},
-                          icon: const Icon(Icons.arrow_back_outlined)),
-                    ))
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Stack(
                 children: [
-                  Text(widget.animeDetail.name ?? "",
-                      style: const TextStyle(fontSize: 30),
-                      textAlign: TextAlign.left),
-                  const SizedBox(
-                    height: 7,
-                  ),
-                  Text('${widget.animeDetail.dateOfRelease}'),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      widget.animeDetail.videos!.isNotEmpty
-                          ? TextButton.icon(
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Colors.green),
-                              ),
-                              label: const Text(
-                                "Play",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              icon: const Icon(
-                                Icons.play_circle,
-                                color: Colors.white,
-                              ),
-                              onPressed: () => {
-                                seasonController.playVideo.value = false,
-                                seasonController.playVideo.refresh(),
-                                seasonController.onTapVideo(
-                                    videos.first.videoBlobFile!.vbId!)
-                              },
-                            )
-                          : const SizedBox(),
-                      widget.animeDetail.videos!.isNotEmpty
-                          ? const SizedBox(
-                              width: 10,
-                            )
-                          : const SizedBox(),
-                      OutlinedButton.icon(
-                        style: TextButton.styleFrom(
-                          primary: Colors.white,
-                          side: const BorderSide(color: Colors.white),
-                        ),
-                        label: const Text(
-                          "My List",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        icon: const Icon(
-                          Icons.add,
-                          color: Colors.white,
-                        ),
-                        onPressed: () {
-                          addToMyList(widget.animeDetail.aid);
-                        },
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      TextButton.icon(
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.green),
-                        ),
-                        label: const Text(
-                          "Trailer",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        icon: const Icon(
-                          Icons.play_arrow,
-                          color: Colors.white,
-                        ),
-                        onPressed: () => {},
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    widget.animeDetail.description ?? "",
-                    style: const TextStyle(fontSize: 10),
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: false,
-                    maxLines: 2,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  SeasonViewer(videos,
-                      isSeason: widget.animeDetail.animeType == 'single'
-                          ? false
-                          : true,
-                      key: const ValueKey(100)),
+                  Obx(() => seasonController.playVideo.value
+                      ? _playView(context)
+                      : animeBackDrop()),
+                  Positioned(
+                      top: 25,
+                      left: 15,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.green.shade600,
+                            borderRadius: BorderRadius.circular(40)),
+                        child: IconButton(
+                            color: Colors.white,
+                            tooltip: "Back",
+                            onPressed: () => {Get.back()},
+                            icon: const Icon(Icons.arrow_back_outlined)),
+                      ))
                 ],
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(widget.animeDetail.name ?? "",
+                        style: const TextStyle(fontSize: 30),
+                        textAlign: TextAlign.left),
+                    const SizedBox(
+                      height: 7,
+                    ),
+                    Text('${widget.animeDetail.dateOfRelease}'),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        widget.animeDetail.videos!.isNotEmpty
+                            ? TextButton.icon(
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.green),
+                                ),
+                                label: const Text(
+                                  "Play",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                icon: const Icon(
+                                  Icons.play_circle,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () => {
+                                  seasonController.playVideo.value = false,
+                                  seasonController.playVideo.refresh(),
+                                  seasonController.onTapVideo(
+                                      videos.first.videoBlobFile!.vbId!)
+                                },
+                              )
+                            : const SizedBox(),
+                        widget.animeDetail.videos!.isNotEmpty
+                            ? const SizedBox(
+                                width: 10,
+                              )
+                            : const SizedBox(),
+                        OutlinedButton.icon(
+                          style: TextButton.styleFrom(
+                            primary: Colors.white,
+                            side: const BorderSide(color: Colors.white),
+                          ),
+                          label: const Text(
+                            "My List",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          icon: const Icon(
+                            Icons.add,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            addToMyList(widget.animeDetail.aid);
+                          },
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        TextButton.icon(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.green),
+                          ),
+                          label: const Text(
+                            "Trailer",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          icon: const Icon(
+                            Icons.play_arrow,
+                            color: Colors.white,
+                          ),
+                          onPressed: () => {},
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      widget.animeDetail.description ?? "",
+                      style: const TextStyle(fontSize: 10),
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: false,
+                      maxLines: 2,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    SeasonViewer(videos,
+                        isSeason: widget.animeDetail.animeType == 'single'
+                            ? false
+                            : true,
+                        key: const ValueKey(100)),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

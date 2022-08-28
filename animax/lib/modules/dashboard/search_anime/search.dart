@@ -28,31 +28,34 @@ class Search extends StatelessWidget {
                 isObscure: false,
               )),
         ),
-        Obx(
-          () => FutureBuilder(
-            future: searchAnime(controller.debounceSearchText.value),
-            builder: (BuildContext context,
-                AsyncSnapshot<List<AnimeDetail>> snapshot) {
-              //debugPrint('${snapshot.data}');
-              if (snapshot.hasData) {
-                List<AnimeDetail>? searchResult = snapshot.data;
-                if (searchResult!.isEmpty) {
-                  return CenterImageWithTextForNoData(
-                    text: "No Result Found",
-                    imageSrc: "assets/images/no_release_sch.png",
-                    desc: "Sorry, there is no anime found !",
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Obx(
+            () => FutureBuilder(
+              future: searchAnime(controller.debounceSearchText.value),
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<AnimeDetail>> snapshot) {
+                //debugPrint('${snapshot.data}');
+                if (snapshot.hasData) {
+                  List<AnimeDetail>? searchResult = snapshot.data;
+                  if (searchResult!.isEmpty) {
+                    return CenterImageWithTextForNoData(
+                      text: "No Result Found",
+                      imageSrc: "assets/images/no_release_sch.png",
+                      desc: "Sorry, there is no anime found !",
+                    );
+                  }
+                  return SingleChildScrollView(
+                    child: Column(
+                        children: searchResult.map<SearchChildNode>((e) {
+                      return SearchChildNode(e);
+                    }).toList()),
                   );
+                } else {
+                  return const CircularProgressIndicator();
                 }
-                return SingleChildScrollView(
-                  child: Column(
-                      children: searchResult.map<SearchChildNode>((e) {
-                    return SearchChildNode(e);
-                  }).toList()),
-                );
-              } else {
-                return const CircularProgressIndicator();
-              }
-            },
+              },
+            ),
           ),
         )
       ],

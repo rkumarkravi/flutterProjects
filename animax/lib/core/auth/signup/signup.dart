@@ -1,12 +1,13 @@
 import 'package:animax/core/custom/AnimeTextField.dart';
 import 'package:animax/core/custom/DividerWithText.dart';
+import 'package:animax/utils/services/AuthService.dart';
 import 'package:animax/widgets/image-with-text-button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Signup extends StatelessWidget {
-  final fnameController = TextEditingController();
-  final lnameController = TextEditingController();
+  final fNameController = TextEditingController();
+  final lNameController = TextEditingController();
   final emailController = TextEditingController();
   final passController = TextEditingController();
   final dobController = TextEditingController();
@@ -26,9 +27,6 @@ class Signup extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              const SizedBox(
-                height: 20,
-              ),
               Icon(
                 Icons.local_fire_department_sharp,
                 color: Theme.of(context).primaryColor,
@@ -56,7 +54,7 @@ class Signup extends StatelessWidget {
                       SizedBox(
                           width: 185,
                           child: AnimeTextField(
-                            controller: fnameController,
+                            controller: fNameController,
                             hintText: "First Name",
                             filled: true,
                             borderRadius: 10.0,
@@ -65,7 +63,7 @@ class Signup extends StatelessWidget {
                       SizedBox(
                         width: 185,
                         child: AnimeTextField(
-                            controller: lnameController,
+                            controller: lNameController,
                             hintText: "Last Name",
                             filled: true,
                             borderRadius: 10.0,
@@ -131,15 +129,25 @@ class Signup extends StatelessWidget {
               SizedBox(
                 width: 380,
                 height: 70,
-                child: ImageWithTextButton(
-                    color: Colors.green.shade600,
-                    text: const Text(
-                      "Sign Up",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    )),
+                child: InkWell(
+                  onTap: () {
+                    attemptSignup(fNameController.text,
+                        lNameController.text,
+                        emailController.text,
+                        passController.text,
+                        dobController.text,
+                        mobNoController.text);
+                  },
+                  child: ImageWithTextButton(
+                      color: Colors.green.shade600,
+                      text: const Text(
+                        "Sign Up",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      )),
+                ),
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
               DividerWithText(text: "or continue with"),
               const SizedBox(

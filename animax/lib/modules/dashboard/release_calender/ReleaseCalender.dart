@@ -3,6 +3,9 @@ import 'package:animax/modules/dashboard/dashboard.dart';
 import 'package:animax/modules/dashboard/dashboard_widgets/AnimeCard.dart';
 import 'package:animax/utils/services/AnimeService.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../anime_viewer/AnimeViewer.dart';
 
 class ReleaseCalender extends StatefulWidget {
   const ReleaseCalender({Key? key}) : super(key: key);
@@ -62,7 +65,7 @@ class _ReleaseCalenderState extends State<ReleaseCalender> {
                       }
                       return GridView.count(
                           shrinkWrap: true,
-                          crossAxisCount: 3,
+                          crossAxisCount: 2,
                           mainAxisSpacing: 10.0,
                           crossAxisSpacing: 10.0,
                           childAspectRatio: (150 / 200),
@@ -73,8 +76,15 @@ class _ReleaseCalenderState extends State<ReleaseCalender> {
                                     key: ObjectKey(content[index]),
                                     header: null,
                                     footer: null,
-                                    child: AnimeCard(content[index],
-                                        key: ObjectKey(content[index])),
+                                    child: InkWell(
+                                      onTap: () => Get.to(AnimeViewer(content[index])),
+                                      child: Image.network(
+                                        content[index].poster ?? "",
+                                        height: 200,
+                                        width: 144,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
                                   )));
                     } else {
                       return const CenterProgressIndicator();

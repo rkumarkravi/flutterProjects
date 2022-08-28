@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:animax/utils/services/AnimeService.dart';
 import 'package:animax/utils/services/SharedPrefService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -73,6 +74,32 @@ dynamic attemptLogIn(String email, String password) async {
 
 //   return null;
 // }
+
+dynamic attemptSignup(String fName, String lName, String email, String password,
+    String dob, String mobNo) async {
+  var res = await http.post(
+      Uri(
+          scheme: 'http',
+          host: SERVER_IP,
+          port: 8080,
+          path: 'anime/auth/register'),
+      headers: {'Content-type': 'application/json'},
+      body: jsonEncode({
+        "firstname": fName,
+        "lastname": lName,
+        "emailId": email,
+        "password": password,
+        "dob": dob,
+        "mobileNo": mobNo
+      }));
+  if (res.statusCode == 200) {
+    debugPrint(res.body);
+    Get.offAllNamed("/login");
+    showSnackbar("Info", "Successfully Sign up, Please Login!");
+  } else {
+    showSnackbar("Error", "Something went wrong while sign up");
+  }
+}
 
 dynamic validateToken(token) async {
   var res = await http.get(

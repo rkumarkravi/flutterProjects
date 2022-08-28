@@ -33,6 +33,7 @@ class _AnimeTextFieldState extends State<AnimeTextField> {
 
   @override
   void initState() {
+    _isObscure=widget.isObscure??false;
     _focusNode.addListener(_focusListner);
     super.initState();
   }

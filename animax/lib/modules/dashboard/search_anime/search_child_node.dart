@@ -31,7 +31,7 @@ class SearchChildNode extends StatelessWidget {
                 ],
               ),
               const SizedBox(
-                width: 20,
+                width: 10,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

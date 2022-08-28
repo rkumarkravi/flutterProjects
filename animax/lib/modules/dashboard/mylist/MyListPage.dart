@@ -3,8 +3,10 @@ import 'package:animax/modules/dashboard/dashboard_widgets/AnimeCard.dart';
 import 'package:animax/modules/dashboard/release_calender/ReleaseCalender.dart';
 import 'package:animax/utils/services/AnimeService.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../core/models/anime_detail/anime_detail.dart';
+import '../anime_viewer/AnimeViewer.dart';
 
 class MyListPage extends StatefulWidget {
   const MyListPage({Key? key}) : super(key: key);
@@ -55,10 +57,10 @@ class _MyListPageState extends State<MyListPage> {
                     }
                     return GridView.count(
                         shrinkWrap: true,
-                        crossAxisCount: 3,
-                        mainAxisSpacing: 10.0,
-                        crossAxisSpacing: 10.0,
-                        childAspectRatio: (150 / 200),
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 5.0,
+                        crossAxisSpacing: 5.0,
+                        childAspectRatio: (9 / 12),
                         scrollDirection: Axis.vertical,
                         children: List.generate(
                             content.length,
@@ -66,10 +68,10 @@ class _MyListPageState extends State<MyListPage> {
                                   key: ObjectKey(content[index]),
                                   header: null,
                                   footer: Container(
-                                    color: Colors.black,
+                                    color: Colors.green.shade600,
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 8.0),
+                                          horizontal: 5.0),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -96,8 +98,15 @@ class _MyListPageState extends State<MyListPage> {
                                       ),
                                     ),
                                   ),
-                                  child: AnimeCard(content[index],
-                                      key: ObjectKey(content[index])),
+                                  child: InkWell(
+                                    onTap: () => Get.to(AnimeViewer(content[index])),
+                                    child: Image.network(
+                                      content[index].poster ?? "",
+                                      height: 200,
+                                      width: 144,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
                                 )));
                   } else {
                     return const CenterProgressIndicator();

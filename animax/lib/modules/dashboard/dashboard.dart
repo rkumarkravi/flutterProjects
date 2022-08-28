@@ -30,30 +30,32 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: const Color.fromARGB(255, 109, 255, 114),
-        type: BottomNavigationBarType.fixed,
-        currentIndex: currentIndex,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_month_rounded), label: "Release Cal."),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.bookmark_border_outlined), label: "My List"),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
-          // BottomNavigationBarItem(
-          //     icon: Icon(Icons.download_for_offline_outlined),
-          //     label: "Download"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: "Settings"),
-        ],
-        onTap: (index) {
-          currentIndex = index;
-          setState(() {});
-        },
+    return SafeArea(
+      child: Scaffold(
+        bottomNavigationBar: BottomNavigationBar(
+          selectedItemColor: const Color.fromARGB(255, 109, 255, 114),
+          type: BottomNavigationBarType.fixed,
+          currentIndex: currentIndex,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.calendar_month_rounded), label: "Release Cal."),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.bookmark_border_outlined), label: "My List"),
+            BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
+            // BottomNavigationBarItem(
+            //     icon: Icon(Icons.download_for_offline_outlined),
+            //     label: "Download"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.settings), label: "Settings"),
+          ],
+          onTap: (index) {
+            currentIndex = index;
+            setState(() {});
+          },
+        ),
+        body: SingleChildScrollView(child: pages[currentIndex]),
       ),
-      body: SingleChildScrollView(child: pages[currentIndex]),
     );
   }
 }
