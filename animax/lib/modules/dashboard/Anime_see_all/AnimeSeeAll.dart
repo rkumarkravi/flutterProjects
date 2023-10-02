@@ -5,7 +5,7 @@ import '../../../utils/services/AnimeService.dart';
 
 class AnimeSeeAll extends StatelessWidget {
   String heading = "";
-  AnimeSeeAll({Key? key, required this.heading}) : super(key: key) ;
+  AnimeSeeAll({Key? key, required this.heading}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +19,7 @@ class AnimeSeeAll extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: FutureBuilder(
-            future:fetchData(0, 10),
+            future: fetchData(0, 10),
             builder:
                 (BuildContext context, AsyncSnapshot<AnimeRespone> snapshot) {
               int a = 0;
