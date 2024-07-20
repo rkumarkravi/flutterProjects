@@ -1,0 +1,17 @@
+firebase:
+----------------
+{
+year:{
+month:{
+date:{
+notes:[]
+}
+}
+}
+}
+
+note:
+{
+"title":"",
+"completed":false
+}
