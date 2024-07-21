@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:medic_meditation_app/auth/signup.dart';
 
-import '../custom_widgets/BiggerButton.dart';
-
-class Signin extends StatefulWidget {
-  const Signin({Key? key}) : super(key: key);
+import '../../utils/consts/image_consts.dart';
+import '../custom/medic_bigger_button.dart';
+    
+class Signup extends StatefulWidget {
+  const Signup({Key? key}) : super(key: key);
 
   @override
-  _SigninState createState() => _SigninState();
+  _SignupState createState() => _SignupState();
 }
 
-class _SigninState extends State<Signin> {
+class _SignupState extends State<Signup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,13 +18,13 @@ class _SigninState extends State<Signin> {
         fit: StackFit.expand,
         children: [
           Image.asset(
-            'assets/images/login_background.png',
+            ImageConsts.LOGIN_SIGNUP_BG,
             fit: BoxFit.cover,
           ),
           Positioned(
             top: 101,
             left: 35,
-            child: Image.asset('assets/images/sxlogo.png'),
+            child: Image.asset(ImageConsts.SMALL_LOGO),
           ),
           Positioned(
               top: 181,
@@ -34,11 +34,11 @@ class _SigninState extends State<Signin> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Sign In",
+                    "Sign Up",
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   Text(
-                    "Sign in now to acces your excercises and saved music.",
+                    "Sign up now for free and start meditating, and explore Medic.",
                     overflow: TextOverflow.visible,
                     softWrap: true,
                     textAlign: TextAlign.left,
@@ -56,6 +56,10 @@ class _SigninState extends State<Signin> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
+                  TextFormField(
+                    decoration:
+                        const InputDecoration(hintText: "Name"),
+                  ),
                   TextFormField(
                     decoration:
                         const InputDecoration(hintText: "Email Address"),
@@ -78,34 +82,31 @@ class _SigninState extends State<Signin> {
                 ],
               )),
           Positioned(
-              bottom: 260,
+              bottom: 200,
               left: 35,
-              right: 35,
+              right:35,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  BiggerButton(
+                  MedicBiggerButton(
                     onPressed: () {
-                      print("Login Clicked!");
+                      print("Signup Clicked!");
                     },
-                    text: 'LOGIN',
+                    text: 'SIGNUP',
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        "Don't have an account ?",
+                        "Already have an account ?",
                         style: TextStyle(color: Colors.white),
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => const Signup()));
+                          Navigator.pop(context);
                         },
                         child:  Text(
-                          'Sign Up',
+                          'Sign In',
                           style: Theme.of(context).textTheme.titleMedium
                         ),
                       ),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:medic_meditation_app/auth/signin.dart';
+import 'package:medic_meditation_app/utils/consts/image_consts.dart';
+import 'package:medic_meditation_app/widgets/auth/signin.dart';
 
-import 'custom_widgets/BiggerButton.dart';
+import 'custom/medic_bigger_button.dart';
 
 class Landing extends StatefulWidget {
   const Landing({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class _LandingState extends State<Landing> {
         fit: StackFit.expand,
         children: <Widget>[
           Image.asset(
-            'assets/images/splash_background.png',
+            ImageConsts.SPLASH_LANDING_BG,
             fit: BoxFit.cover,
           ),
           Column(
@@ -27,7 +28,7 @@ class _LandingState extends State<Landing> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Image.asset(
-                'assets/images/logo.png',
+                ImageConsts.BIG_LOGO,
                 height: 199,
                 width: 191,
               ),
@@ -62,9 +63,9 @@ class _LandingState extends State<Landing> {
             right: 0,
             child: Column(
               children: [
-                BiggerButton(
+                MedicBiggerButton(
                   onPressed: () {
-                    Navigator.push(context,
+                    Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (_) => const Signin()));
                     // Navigate to the next screen or perform your action
                   },

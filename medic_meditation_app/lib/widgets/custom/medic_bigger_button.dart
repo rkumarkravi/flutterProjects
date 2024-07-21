@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
     
-class BiggerButton extends StatelessWidget {
+class MedicBiggerButton extends StatelessWidget {
 
   final VoidCallback onPressed;
   final String text;
 
-  const BiggerButton({
+  const MedicBiggerButton({
     Key? key,
     required this.onPressed,
     required this.text,

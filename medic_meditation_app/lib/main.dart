@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:medic_meditation_app/splash.dart';
+import 'package:flutter/services.dart';
+import 'package:medic_meditation_app/widgets/splash.dart';
+import 'package:medic_meditation_app/utils/theme/custom_input_decoration_theme.dart';
+import 'package:medic_meditation_app/utils/theme/custom_text_selection_theme.dart';
+
+import 'utils/theme/custom_text_theme.dart';
 
 void main() {
   runApp(const MyApp());
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent, // You can set it to any color or make it transparent
+    statusBarIconBrightness: Brightness.light, // For dark icons on light background
+    statusBarBrightness: Brightness.light, // For light icons on dark background (iOS only)
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -12,46 +22,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Medic Meditation',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
-        textTheme: const TextTheme(
-            displayLarge: TextStyle(color: Colors.white),
-            displayMedium: TextStyle(color: Colors.white),
-            displaySmall: TextStyle(color: Colors.white),
-            headlineLarge: TextStyle(color: Colors.white),
-            headlineMedium: TextStyle(color: Colors.white),
-            headlineSmall: TextStyle(color: Colors.white),
-            titleLarge: TextStyle(color: Colors.white),
-            titleMedium: TextStyle(color: Colors.white),
-            titleSmall: TextStyle(color: Colors.white),
-            bodyLarge: TextStyle(color: Colors.white, fontSize: 30),
-            bodyMedium: TextStyle(color: Colors.white, fontSize: 22),
-            bodySmall: TextStyle(color: Colors.white),
-            labelLarge: TextStyle(color: Colors.white),
-            labelMedium: TextStyle(color: Colors.white),
-            labelSmall: TextStyle(color: Colors.white)),
-        inputDecorationTheme: const InputDecorationTheme(
-          // border: UnderlineInputBorder(
-          //   borderRadius: BorderRadius.circular(10.0),
-          // ),
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
-            // borderRadius: BorderRadius.circular(10.0),
-          ),
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.white, width: 0),
-            // borderRadius: BorderRadius.circular(10.0),
-          ),
-          labelStyle: TextStyle(color: Colors.white),
-          hintStyle: TextStyle(color: Color(0xFFBEC2C2)),
-        ),
-        textSelectionTheme:TextSelectionThemeData(
-          cursorColor: Colors.white,
-          selectionColor: Colors.grey.withOpacity(0.3),
-          selectionHandleColor: Colors.grey,
-        ),
+        textTheme: CustomTextTheme.textTheme,
+        inputDecorationTheme: CustomInputDecorationTheme.inputDecorationTheme,
+        textSelectionTheme:CustomTextSelectionTheme.textSelectionTheme,
+        scaffoldBackgroundColor: const Color(0xFF253334)
       ),
       home: const Splash(),
     );

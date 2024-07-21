@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../utils/consts/image_consts.dart';
 import 'landing.dart';
 
 class Splash extends StatefulWidget {
@@ -31,11 +32,11 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin{
         fit: StackFit.expand,
         children: <Widget>[
           Image.asset(
-            'assets/images/splash_background.png',
+            ImageConsts.SPLASH_LANDING_BG,
             fit: BoxFit.cover,
           ),
           Center(
-            child: Image.asset('assets/images/logo.png'),
+            child: Image.asset(ImageConsts.BIG_LOGO),
           ),
         ],
       ),

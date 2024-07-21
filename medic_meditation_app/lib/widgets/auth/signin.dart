@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:medic_meditation_app/utils/consts/image_consts.dart';
+import 'package:medic_meditation_app/widgets/auth/signup.dart';
+import 'package:medic_meditation_app/widgets/main/main_app.dart';
 
-import '../custom_widgets/BiggerButton.dart';
-    
-class Signup extends StatefulWidget {
-  const Signup({Key? key}) : super(key: key);
+import '../custom/medic_bigger_button.dart';
+
+class Signin extends StatefulWidget {
+  const Signin({Key? key}) : super(key: key);
 
   @override
-  _SignupState createState() => _SignupState();
+  _SigninState createState() => _SigninState();
 }
 
-class _SignupState extends State<Signup> {
+class _SigninState extends State<Signin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,13 +20,13 @@ class _SignupState extends State<Signup> {
         fit: StackFit.expand,
         children: [
           Image.asset(
-            'assets/images/login_background.png',
+            ImageConsts.LOGIN_SIGNUP_BG,
             fit: BoxFit.cover,
           ),
           Positioned(
             top: 101,
             left: 35,
-            child: Image.asset('assets/images/sxlogo.png'),
+            child: Image.asset(ImageConsts.SMALL_LOGO),
           ),
           Positioned(
               top: 181,
@@ -33,11 +36,11 @@ class _SignupState extends State<Signup> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Sign Up",
+                    "Sign In",
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   Text(
-                    "Sign up now for free and start meditating, and explore Medic.",
+                    "Sign in now to acces your excercises and saved music.",
                     overflow: TextOverflow.visible,
                     softWrap: true,
                     textAlign: TextAlign.left,
@@ -55,10 +58,6 @@ class _SignupState extends State<Signup> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  TextFormField(
-                    decoration:
-                        const InputDecoration(hintText: "Name"),
-                  ),
                   TextFormField(
                     decoration:
                         const InputDecoration(hintText: "Email Address"),
@@ -81,31 +80,38 @@ class _SignupState extends State<Signup> {
                 ],
               )),
           Positioned(
-              bottom: 200,
+              bottom: 260,
               left: 35,
-              right:35,
+              right: 35,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  BiggerButton(
+                  MedicBiggerButton(
                     onPressed: () {
-                      print("Signup Clicked!");
+                      print("Login Clicked!");
+                      Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const MainApp()));
                     },
-                    text: 'SIGNUP',
+                    text: 'LOGIN',
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        "Already have an account ?",
+                        "Don't have an account ?",
                         style: TextStyle(color: Colors.white),
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const Signup()));
                         },
                         child:  Text(
-                          'Sign In',
+                          'Sign Up',
                           style: Theme.of(context).textTheme.titleMedium
                         ),
                       ),
