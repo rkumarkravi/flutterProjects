@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../data/pojo/MeditationItem.dart';
+import '../../data/model/MeditationItem.dart';
 
 class MedicHomeCard extends StatelessWidget {
   final MeditationItem item;

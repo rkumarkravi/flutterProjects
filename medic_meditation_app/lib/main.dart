@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:medic_meditation_app/widgets/splash.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:medic_meditation_app/screens/splash.dart';
 import 'package:medic_meditation_app/utils/theme/custom_input_decoration_theme.dart';
 import 'package:medic_meditation_app/utils/theme/custom_text_selection_theme.dart';
 
@@ -21,10 +22,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Medic Meditation',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF253334)),
         useMaterial3: true,
         textTheme: CustomTextTheme.textTheme,
         inputDecorationTheme: CustomInputDecorationTheme.inputDecorationTheme,
