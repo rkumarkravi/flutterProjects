@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:medic_meditation_app/screens/landing.dart';
+import 'package:medic_meditation_app/screens/main/home.dart';
 import 'package:medic_meditation_app/screens/splash.dart';
 import 'package:medic_meditation_app/utils/theme/custom_input_decoration_theme.dart';
 import 'package:medic_meditation_app/utils/theme/custom_text_selection_theme.dart';
@@ -33,6 +36,10 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFF253334)
       ),
       home: const Splash(),
+     getPages: [
+       GetPage(name: "/landing", page: ()=>Landing()),
+       GetPage(name: "/home", page: ()=>Home()),
+     ],
     );
   }
 }

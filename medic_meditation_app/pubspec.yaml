@@ -38,6 +38,7 @@ dependencies:
   get:
   just_audio: ^0.9.16
   audio_service: ^0.18.0
+  fl_chart: ^0.68.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
