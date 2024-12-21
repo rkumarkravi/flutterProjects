@@ -57,7 +57,7 @@ class _ProfileState extends State<Profile>
             labelColor: Colors.white,
             unselectedLabelColor: Colors.white54,
             indicatorColor: Colors.white,
-            tabs: [
+            tabs: const [
               Tab(text: 'STATS'),
               Tab(text: 'ACHIEVEMENTS'),
             ],
@@ -65,7 +65,7 @@ class _ProfileState extends State<Profile>
           Expanded(
             child: TabBarView(
               controller: _tabController,
-              children: [
+              children: const [
                 Center(
                   child: Text(
                     'Achievements coming soon!',
